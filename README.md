@@ -2,15 +2,17 @@
 
 **Turn any set of SVG paths into a smooth morphing animation — in the browser.**
 
-[![Live demo](./docs/assets/hero.png)](./docs/assets/demo.gif)
+**[▶ Try it live](https://llinok111.github.io/svg-path-morph-editor/)** · no install, runs entirely client-side.
+
+[![Morph demo](./docs/assets/demo.gif)](https://llinok111.github.io/svg-path-morph-editor/)
+
+Circle → square → star, captured straight from the running app. The orange line is
+the interpolated frame, the faint white outline is the editable source path.
 
 > **This is a fork.** Upstream: [Yqnn/svg-path-editor](https://github.com/Yqnn/svg-path-editor)
 > (Apache-2.0, commit `937d75a`). The original editor is unchanged; this fork adds a
 > keyframe-based **path morphing animation** system on top of it. See [NOTICE](./NOTICE)
 > for the full list of added and modified files.
-
-Circle → square → star, captured straight from the running app. The orange line is
-the interpolated frame, the faint white outline is the editable source path.
 
 ## Why this exists
 
