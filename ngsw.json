@@ -1,0 +1,99 @@
+{
+  "configVersion": 1,
+  "timestamp": 1792470315408,
+  "index": "/svg-path-morph-editor/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/svg-path-morph-editor/favicon.ico",
+        "/svg-path-morph-editor/index.html",
+        "/svg-path-morph-editor/main.b56a9d7361876e3a.js",
+        "/svg-path-morph-editor/manifest.webmanifest",
+        "/svg-path-morph-editor/polyfills.8b39c005062fd761.js",
+        "/svg-path-morph-editor/runtime.6f6474d711a7c88e.js",
+        "/svg-path-morph-editor/styles.76a03d602b7f3c86.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/svg-path-morph-editor/assets/delete.svg",
+        "/svg-path-morph-editor/assets/github.svg",
+        "/svg-path-morph-editor/assets/icons/icon-128x128.png",
+        "/svg-path-morph-editor/assets/icons/icon-144x144.png",
+        "/svg-path-morph-editor/assets/icons/icon-152x152-cropped.png",
+        "/svg-path-morph-editor/assets/icons/icon-152x152.png",
+        "/svg-path-morph-editor/assets/icons/icon-192x192.png",
+        "/svg-path-morph-editor/assets/icons/icon-384x384.png",
+        "/svg-path-morph-editor/assets/icons/icon-512x512.png",
+        "/svg-path-morph-editor/assets/icons/icon-72x72.png",
+        "/svg-path-morph-editor/assets/icons/icon-96x96.png",
+        "/svg-path-morph-editor/assets/logo.svg",
+        "/svg-path-morph-editor/assets/more.svg",
+        "/svg-path-morph-editor/assets/sponsor.svg",
+        "/svg-path-morph-editor/assets/zoom_fit.svg",
+        "/svg-path-morph-editor/assets/zoom_in.svg",
+        "/svg-path-morph-editor/assets/zoom_out.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/svg-path-morph-editor/assets/delete.svg": "c9d8618ebbfb075f6449d7ccd318be36803a2a98",
+    "/svg-path-morph-editor/assets/github.svg": "f49c2d4abc2753aff2edbd161758f852472e22ed",
+    "/svg-path-morph-editor/assets/icons/icon-128x128.png": "990bf9066e18e84df38496afcb581dd032d5dd79",
+    "/svg-path-morph-editor/assets/icons/icon-144x144.png": "1418f7e28c137f14f1e3f52405587500dc2e314e",
+    "/svg-path-morph-editor/assets/icons/icon-152x152-cropped.png": "4252eb7bfb2e454264eef04afedbe46f22abd619",
+    "/svg-path-morph-editor/assets/icons/icon-152x152.png": "149f61864f3e263deedab9a54ae68737417b1b3c",
+    "/svg-path-morph-editor/assets/icons/icon-192x192.png": "a4357613a87087d60ddb19e3f1117cd7116fab7a",
+    "/svg-path-morph-editor/assets/icons/icon-384x384.png": "d98880dd39e8f550e4c12b3c6c6d347a4c79adfe",
+    "/svg-path-morph-editor/assets/icons/icon-512x512.png": "7492b47ba3ea2a411037ca9f65474c1e557b9dbb",
+    "/svg-path-morph-editor/assets/icons/icon-72x72.png": "025fc86cdee053766cb0ba832ec7611d9d2f9e24",
+    "/svg-path-morph-editor/assets/icons/icon-96x96.png": "94a0268ac4b4667655798a2ae84a4ce1197a9775",
+    "/svg-path-morph-editor/assets/logo.svg": "991d4d0400f85453cf8f7cbad937be0201bf0f65",
+    "/svg-path-morph-editor/assets/more.svg": "b10d6de2d92740c806af17c0ff9c520d3e4bf35f",
+    "/svg-path-morph-editor/assets/sponsor.svg": "7ef4b2531be1d24978c158588ea28851b3cfe579",
+    "/svg-path-morph-editor/assets/zoom_fit.svg": "3bfa12d79ff4a9c32465c0501ef85d3783ea96c3",
+    "/svg-path-morph-editor/assets/zoom_in.svg": "bf3ac558a23c8e5de36d2526618eac96e867af4a",
+    "/svg-path-morph-editor/assets/zoom_out.svg": "2e7c0be5fb00f1468a89685dc13139a63d34588d",
+    "/svg-path-morph-editor/favicon.ico": "5e89bcef8dcf5abfb8442b0a182fbe76dfbf61a9",
+    "/svg-path-morph-editor/index.html": "783c1189c41982f7040ea485db2dc7345f2ffc60",
+    "/svg-path-morph-editor/main.b56a9d7361876e3a.js": "62d22fb27ffd0c77e3227d576ce0f18df21e80ef",
+    "/svg-path-morph-editor/manifest.webmanifest": "84b506d5506e0b0c2a1c81b77b9be7c69c2ad98b",
+    "/svg-path-morph-editor/polyfills.8b39c005062fd761.js": "5528ed17f82f00026170955b4855919cb97a15aa",
+    "/svg-path-morph-editor/runtime.6f6474d711a7c88e.js": "2fb0c339e14f24885ee4118a95a4513ce37011a6",
+    "/svg-path-morph-editor/styles.76a03d602b7f3c86.css": "ad40d93b931c4ec7bcde40d0e32cd8fbc0148546"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
