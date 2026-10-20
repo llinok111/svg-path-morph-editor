@@ -34,6 +34,7 @@ import { UploadImageComponent, UploadImageDialogComponent } from './upload-image
 import { ImportComponent, ImportDialogComponent } from './import/import.component';
 import { ShareComponent, ShareDialogComponent } from './share/share.component';
 import { CopiedSnackbarComponent } from './copied-snackbar/copied-snackbar.component';
+import { MorphTimelineComponent } from './morph-timeline/morph-timeline.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { CopiedSnackbarComponent } from './copied-snackbar/copied-snackbar.compo
     CopiedSnackbarComponent,
     FormatterDirective,
     KeyboardNavigableDirective,
-    PathPreviewComponent
+    PathPreviewComponent,
+    MorphTimelineComponent
   ],
   imports: [
     BrowserModule,

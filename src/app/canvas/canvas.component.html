@@ -76,6 +76,13 @@
         [class.filled]="filled"
         [attr.d]="parsedPath?.asString()"
         [attr.stroke-width]="strokeWidth"
+        [class.dimmed]="!!morphPreviewPath"
+    />
+
+    <svg:path *ngIf="morphPreviewPath"
+        class="morph-preview"
+        [attr.d]="morphPreviewPath"
+        [attr.stroke-width]="strokeWidth * 1.6"
     />
 
 

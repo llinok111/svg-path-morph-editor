@@ -43,3 +43,7 @@ testem.log
 .DS_Store
 Thumbs.db
 pnpm-lock.yaml
+
+# Morph timeline verification output
+/tools/morph-check/frames
+/tools/morph-check/out

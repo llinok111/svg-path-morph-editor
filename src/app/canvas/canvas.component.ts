@@ -46,6 +46,12 @@ export class CanvasComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() draggedIsNew = false;
   @Input() images: Image[] = [];
   @Input() editImages = true;
+  /**
+   * Path data of the current morph frame. Rendered as an overlay while the
+   * timeline is playing; null means "show the editable path only".
+   * Added for this fork.
+   */
+  @Input() morphPreviewPath: string | null = null;
 
   @Output() afterModelChange = new EventEmitter<void>();
   @Output() dragging = new EventEmitter<boolean>();

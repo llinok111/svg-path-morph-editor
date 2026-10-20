@@ -141,3 +141,15 @@ circle.image-control {
 .image-control.move {
     cursor: move;
 }
+/* Morph overlay — added for this fork */
+path.dimmed {
+    opacity: 0.22;
+}
+
+path.morph-preview {
+    stroke: #e8b45a;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+}

@@ -300,6 +300,7 @@
         </div>
     </div>
 
+    <div class="editor-column">
     <div class="drawings">
         <button mat-raised-button class="left-column-open" *ngIf="!isLeftPanelOpened"
         (click)="toggleLeftPanel()"
@@ -465,7 +466,17 @@
             [(focusedImage)]="focusedImage"
             (cursorPosition)="setCursorPosition($event)"
             (hoverPosition)="setHoverPosition($event)"
+            [morphPreviewPath]="morphPreviewPath"
         ></svg>
+    </div>
+    <div class="morph-dock" *ngIf="!cfg.preview">
+        <app-morph-timeline
+            #morphTimeline
+            [currentPath]="rawPath"
+            (previewPath)="onMorphPreview($event)"
+            (playingChange)="onMorphPlayingChange($event)"
+        ></app-morph-timeline>
+    </div>
     </div>
 </div>
 

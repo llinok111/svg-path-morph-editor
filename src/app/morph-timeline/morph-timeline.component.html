@@ -1,0 +1,176 @@
+<div class="morph-panel" [class.playing]="isPlaying" [class.collapsed]="isCollapsed">
+    <div class="morph-header">
+        <button
+            mat-icon-button
+            class="play-button"
+            [disabled]="!canPlay"
+            (click)="togglePlay()"
+            [attr.aria-label]="isPlaying ? 'Pause morph preview' : 'Play morph preview'"
+            [matTooltip]="canPlay ? (isPlaying ? 'Pause' : 'Play') : 'Add at least two keyframes'"
+            matTooltipPosition="above"
+        >
+            <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
+        </button>
+
+        <div class="morph-title">
+            <span class="title">Morph timeline</span>
+            <span class="subtitle" *ngIf="keyframes.length">
+                {{ keyframes.length }} keyframes · {{ formatTime(totalDuration) }}
+            </span>
+            <span class="subtitle" *ngIf="!keyframes.length">Capture shapes, then animate between them</span>
+        </div>
+
+        <span class="fps" *ngIf="isPlaying">{{ measuredFps }} fps</span>
+
+        <button
+            mat-icon-button
+            (click)="isLooping = !isLooping"
+            [matTooltip]="isLooping ? 'Looping on' : 'Looping off'"
+            matTooltipPosition="above"
+            [class.active]="isLooping"
+            aria-label="Toggle loop"
+        >
+            <mat-icon>{{ isLooping ? 'repeat' : 'repeat_one' }}</mat-icon>
+        </button>
+
+        <button
+            mat-icon-button
+            (click)="toggleCollapsed()"
+            [matTooltip]="isCollapsed ? 'Expand timeline' : 'Collapse timeline'"
+            matTooltipPosition="above"
+            aria-label="Toggle timeline panel"
+        >
+            <mat-icon>{{ isCollapsed ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+
+        <button
+            mat-icon-button
+            (click)="addKeyframe()"
+            matTooltip="Capture current path as keyframe"
+            matTooltipPosition="above"
+            aria-label="Add keyframe"
+        >
+            <mat-icon>add_photo_alternate</mat-icon>
+        </button>
+
+        <button
+            mat-icon-button
+            (click)="exportSvg()"
+            [disabled]="!canPlay"
+            matTooltip="Export animated SVG"
+            matTooltipPosition="above"
+            aria-label="Export animated SVG"
+        >
+            <mat-icon>code</mat-icon>
+        </button>
+
+        <button
+            mat-icon-button
+            (click)="exportHtml()"
+            [disabled]="!canPlay"
+            matTooltip="Export standalone HTML player"
+            matTooltipPosition="above"
+            aria-label="Export HTML player"
+        >
+            <mat-icon>download</mat-icon>
+        </button>
+
+        <button
+            mat-icon-button
+            (click)="clearKeyframes()"
+            [disabled]="!keyframes.length"
+            matTooltip="Clear timeline"
+            matTooltipPosition="above"
+            aria-label="Clear timeline"
+        >
+            <mat-icon>delete_sweep</mat-icon>
+        </button>
+    </div>
+
+    <div class="morph-body">
+        <div class="morph-track" *ngIf="keyframes.length; else emptyState">
+            <div class="track-rail">
+                <div
+                    class="track-fill"
+                    [style.width.%]="totalDuration ? (playhead / totalDuration) * 100 : 0"
+                ></div>
+            </div>
+
+            <div class="kf-list">
+                <div
+                    *ngFor="let kf of keyframes; let i = index; trackBy: trackById"
+                    class="kf-chip"
+                    [class.selected]="kf.id === selectedId"
+                    [class.first]="i === 0"
+                    (click)="select(kf.id)"
+                >
+                    <span class="kf-label">{{ kf.label }}</span>
+                    <span class="kf-duration" *ngIf="i > 0">{{ formatTime(kf.duration) }}</span>
+                    <span class="kf-duration" *ngIf="i === 0">start</span>
+                </div>
+            </div>
+
+            <input
+                class="scrub"
+                type="range"
+                min="0"
+                [max]="totalDuration || 1"
+                step="1"
+                [value]="playhead"
+                [disabled]="!totalDuration"
+                (input)="onScrub($event)"
+                aria-label="Timeline scrubber"
+            />
+        </div>
+
+        <ng-template #emptyState>
+            <div class="empty-state">
+                Edit the path above, then press
+                <mat-icon inline>add_photo_alternate</mat-icon>
+                to capture keyframe K1.
+            </div>
+        </ng-template>
+
+        <div class="kf-editor" *ngIf="selected as kf">
+            <div class="field">
+                <label>Transition easing</label>
+                <select
+                    class="app-select"
+                    [value]="kf.easing"
+                    (change)="updateKeyframe(kf.id, { easing: $any($event.target).value })"
+                    [disabled]="kf.id === keyframes[0].id"
+                >
+                    <option *ngFor="let e of easings" [value]="e">{{ easingLabels[e] }}</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Duration</label>
+                <input
+                    class="app-input"
+                    type="number"
+                    min="0"
+                    step="50"
+                    [value]="kf.duration"
+                    (change)="updateKeyframe(kf.id, { duration: +$any($event.target).value })"
+                    [disabled]="kf.id === keyframes[0].id"
+                />
+            </div>
+
+            <div class="field actions">
+                <button mat-icon-button (click)="recapture(kf.id)" matTooltip="Recapture from editor" aria-label="Recapture">
+                    <mat-icon>photo_camera</mat-icon>
+                </button>
+                <button mat-icon-button (click)="moveKeyframe(kf.id, -1)" [disabled]="kf.id === keyframes[0].id" aria-label="Move earlier">
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+                <button mat-icon-button (click)="moveKeyframe(kf.id, 1)" [disabled]="kf.id === lastKeyframeId" aria-label="Move later">
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+                <button mat-icon-button (click)="removeKeyframe(kf.id)" aria-label="Remove keyframe">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

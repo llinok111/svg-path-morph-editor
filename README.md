@@ -1,3 +1,81 @@
+# SvgPathEditor + Morph Timeline
+
+**Turn any set of SVG paths into a smooth morphing animation — in the browser.**
+
+[![Live demo](./docs/assets/hero.png)](./docs/assets/demo.gif)
+
+> **This is a fork.** Upstream: [Yqnn/svg-path-editor](https://github.com/Yqnn/svg-path-editor)
+> (Apache-2.0, commit `937d75a`). The original editor is unchanged; this fork adds a
+> keyframe-based **path morphing animation** system on top of it. See [NOTICE](./NOTICE)
+> for the full list of added and modified files.
+
+Circle → square → star, captured straight from the running app. The orange line is
+the interpolated frame, the faint white outline is the editable source path.
+
+## Why this exists
+
+Upstream SvgPathEditor is a purely static path editor — every edit produces a
+snapshot, and there is no way to animate between two shapes. This fork adds a
+morph timeline that turns any set of paths into a smooth animation.
+
+The hard part of path morphing is not the UI, it is geometry: two paths that use
+different command sequences cannot be interpolated point by point. This fork
+solves that properly instead of shipping a skin.
+
+| Capability | What it does |
+|---|---|
+| Geometry normalisation | Any SVG command (`M L H V C S Q T A Z`, absolute or relative) is converted into cubic Bézier segments, so shapes with different command mixes can be interpolated |
+| Arc conversion | Elliptical arcs become cubic curves via the SVG 1.1 F.6.5 endpoint→centre algorithm, sliced at ≤90° per cubic (≈0.027% max radial error) |
+| Sub-path matching | Different sub-path counts are paired by collapsing extras onto their own anchor instead of being dropped |
+| Start-point alignment | Closed shapes are rotated/reversed to the cheapest anchor match, which removes the "twisted ribbon" artefact |
+| Segment padding | Shorter paths are padded with zero-length segments so the shape does not drift mid-transition |
+| Timeline UI | Add / reorder / delete keyframes, per-transition easing (9 curves), per-transition duration, scrub, play, loop, live fps readout |
+| Export | Animated SVG (SMIL, easing baked into sample timing) and a standalone HTML player with no external dependencies |
+
+### Using the timeline
+
+1. Draw or paste a shape in the path field.
+2. Press the <kbd>add_photo_alternate</kbd> button in the **Morph timeline** bar to capture it as `K1`.
+3. Change the path to a second shape, press the button again to capture `K2`.
+4. Pick an easing curve and duration for the transition, then press play.
+5. Export with the `<>` button (animated SVG) or the download button (HTML player).
+
+The orange overlay is the interpolated frame; the dimmed white outline is the
+editable source path. The overlay never writes back into your path data — the
+animation is always derived, never baked in.
+
+## Measured results
+
+Not estimates — these come from the checked-in scripts in `tools/morph-check/`.
+
+| Metric | Result |
+|---|---|
+| Unit tests | **126 passing** (55 upstream tests untouched + 71 new) |
+| Frame cost, 6 keyframes × 120 segments | avg 10.36 ms · p95 **14.20 ms** · 0 long tasks |
+| Responsive | 1440 / 1024 / 768 / 390 px, no horizontal overflow |
+| Exported SVG | 640×614, SMIL frames verified distinct by pixel hash |
+| Exported HTML | 15.7 KB, plays offline with no console errors |
+
+Reproduce it yourself:
+
+```bash
+npm start                                    # dev server
+export BROWSER_PATH=/path/to/chrome
+node tools/morph-check/e2e-acceptance.mjs    # end-to-end + export verification
+node tools/morph-check/perf-benchmark.mjs    # frame timing under heavy load
+node tools/morph-check/responsive-check.mjs  # four breakpoints
+```
+
+## Known limitations
+
+- SMIL is deprecated in Chrome (not removed). For long-lived output prefer the HTML player.
+- The SVG exporter samples at 30 fps; very fast transitions may show slight stepping. Raise `samplesPerSecond` for denser sampling.
+- Start-point alignment is heuristic: above 256 segments the search samples every 32nd offset rather than exhaustively.
+
+---
+
+## Upstream documentation
+
 # SvgPathEditor
 Edit or create SVG paths in browser: https://yqnn.github.io/svg-path-editor/
 [![Image of Yaktocat](./doc/screenshot.png)](https://yqnn.github.io/svg-path-editor/)
@@ -66,6 +144,33 @@ Run `npm run build` to build the project. The build artifacts will be stored in 
 
 ##### Running unit tests
 Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+Karma needs to find a Chrome binary. If it hangs on
+`ChromeHeadless has not captured in 60000 ms`, point it at your browser:
+
+```bash
+# Windows
+set CHROME_BIN=C:\Program Files\Google\Chrome\Application\chrome.exe
+
+# macOS / Linux
+export CHROME_BIN=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+```
+
+##### Running the morph tests only
+```
+npx ng test --watch=false --browsers=ChromeHeadless \
+  --include='src/lib/path-morph.spec.ts' \
+  --include='src/lib/morph-export.spec.ts'
+```
+
+##### Static preview of a production build
+```
+npx ng build --configuration production --base-href=./
+npx http-server dist -p 8080
+```
+The build is fully static; any static file server works. Serve it over HTTP
+rather than opening `index.html` from disk, because the service worker and
+module scripts require an origin.
 
 ## Special Thanks
 Many thanks to our sponsors 🙇 !

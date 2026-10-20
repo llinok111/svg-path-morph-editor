@@ -1,0 +1,308 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.morph-panel {
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1e1e;
+    border-top: 1px solid #3c3c3c;
+    color: #dddddd;
+    font-size: 13px;
+    user-select: none;
+    transition: background-color 120ms ease;
+
+    &.playing {
+        background-color: #211f1a;
+    }
+}
+
+.morph-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    min-height: 48px;
+
+    .play-button {
+        color: #e8b45a;
+    }
+
+    .morph-title {
+        display: flex;
+        flex-direction: column;
+        margin-left: 4px;
+        margin-right: auto;
+        min-width: 0;
+
+        .title {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            color: #f0f0f0;
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: #9a9a9a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .fps {
+        font-family: monospace;
+        font-size: 11px;
+        color: #7fbf8f;
+        padding: 2px 6px;
+        border: 1px solid #33503c;
+        border-radius: 4px;
+        margin-right: 4px;
+        white-space: nowrap;
+    }
+
+    button.active {
+        color: #e8b45a;
+    }
+}
+
+.morph-body {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    padding: 0 12px 10px 12px;
+    flex-wrap: wrap;
+}
+
+.morph-track {
+    position: relative;
+    flex: 1 1 380px;
+    min-width: 260px;
+    padding-top: 4px;
+}
+
+.track-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 18px;
+    height: 3px;
+    background-color: #353535;
+    border-radius: 2px;
+    overflow: hidden;
+
+    .track-fill {
+        height: 100%;
+        background-color: #e8b45a;
+        transition: width 40ms linear;
+    }
+}
+
+.kf-list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+    min-height: 32px;
+}
+
+.kf-chip {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    height: 34px;
+    padding: 0 8px;
+    margin-right: 14px;
+    border: 1px solid #4a4a4a;
+    border-radius: 6px;
+    background-color: #2a2a2a;
+    cursor: pointer;
+    transition: border-color 120ms ease, background-color 120ms ease, transform 120ms ease;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    &:hover {
+        border-color: #6b6b6b;
+        background-color: #333333;
+    }
+
+    &.selected {
+        border-color: #e8b45a;
+        background-color: #33291a;
+        transform: translateY(-1px);
+    }
+
+    &.first .kf-label {
+        color: #9a9a9a;
+    }
+
+    .kf-label {
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.2;
+        color: #f0f0f0;
+    }
+
+    .kf-duration {
+        font-size: 10px;
+        font-family: monospace;
+        color: #9a9a9a;
+        line-height: 1.2;
+    }
+}
+
+.scrub {
+    width: 100%;
+    margin-top: 10px;
+    accent-color: #e8b45a;
+    height: 16px;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+    }
+}
+
+.empty-state {
+    flex: 1 1 320px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #8a8a8a;
+    font-size: 12px;
+    padding: 8px 0;
+
+    mat-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+        color: #e8b45a;
+    }
+}
+
+.kf-editor {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+        label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #8a8a8a;
+        }
+
+        &.actions {
+            flex-direction: row;
+            gap: 0;
+            align-items: center;
+        }
+    }
+
+    .app-select,
+    .app-input {
+        height: 30px;
+        padding: 0 8px;
+        font-size: 12px;
+        color: #eaeaea;
+        background-color: #2a2a2a;
+        border: 1px solid #4a4a4a;
+        border-radius: 4px;
+        outline: none;
+
+        &:focus {
+            border-color: #e8b45a;
+        }
+
+        &:disabled {
+            opacity: 0.45;
+        }
+    }
+
+    .app-input {
+        width: 84px;
+    }
+
+    .app-select {
+        min-width: 118px;
+    }
+
+    button {
+        color: #bdbdbd;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .morph-body {
+        gap: 10px;
+        padding: 0 10px 10px 10px;
+    }
+
+    .kf-editor {
+        flex: 1 1 100%;
+
+        .app-select {
+            min-width: 100px;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .morph-header {
+        flex-wrap: wrap;
+        padding: 6px 8px;
+
+        .morph-title {
+            order: -1;
+            flex: 1 1 100%;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 4px;
+        }
+
+        .play-button {
+            order: 0;
+        }
+
+        .fps {
+            order: 1;
+            margin-left: auto;
+        }
+    }
+
+    .kf-chip {
+        min-width: 44px;
+        padding: 0 6px;
+        margin-right: 8px;
+    }
+
+    .morph-track {
+        flex: 1 1 100%;
+    }
+}
+
+/* Collapsed state — added for this fork so phones keep the canvas usable */
+.morph-panel.collapsed {
+    .morph-body {
+        display: none;
+    }
+
+    .morph-header {
+        min-height: 40px;
+    }
+}
